@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyHub.Notification.Domain.Enuns
+﻿namespace MyHub.Notification.Domain.Enuns
 {
     public enum ENotiticationType
     {
@@ -12,7 +6,7 @@ namespace MyHub.Notification.Domain.Enuns
         Email = 1,
         MobileNotification = 2,
         PushNotification = 3,
-        WebNotification= 4,
+        WebNotification = 4,
         WhatsAppMessage = 5,
         All = 99
     }

@@ -1,21 +1,18 @@
 ﻿using MyHub.Notification.Domain.Entities;
-using MyHub.Notification.ExternalService.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MyHub.Notification.ExternalService.Interfaces.Handler;
+using MyHub.Notification.ExternalService.Interfaces.Strategy;
 
 namespace MyHub.Notification.ExternalService.Services
 {
     public class MailStrategy : IMailStrategy
     {
-        private readonly IEnumerable<IMailHandlerService> _providers;
+        private readonly IEnumerable<IMailHandler> _providers;
 
-        public MailStrategy(IEnumerable<IMailHandlerService> providers)
+        public MailStrategy(IEnumerable<IMailHandler> providers)
         {
-            _providers = providers; 
+            _providers = providers;
         }
+
         public Task<bool> SendMail(Message message)
         {
             return _providers.FirstOrDefault(x => x.NotificationProvider == message.NotificationProvider)?.SendMail(message) ?? throw new ArgumentNullException(nameof(message));

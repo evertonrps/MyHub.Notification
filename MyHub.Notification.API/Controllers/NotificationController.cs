@@ -16,6 +16,7 @@ namespace MyHub.Notification.API.Controllers
         {
             _notificationService = notificationService;
         }
+
         // GET: api/<NotificationController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -34,14 +35,14 @@ namespace MyHub.Notification.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(MessageModel model)
         {
-            var types = new List<Domain.Enuns.ENotiticationType>();
-            types.Add(Domain.Enuns.ENotiticationType.Email);
+            //var types = new List<Domain.Enuns.ENotiticationType>();
+            //types = model.NotificationType;
             var retorno = await _notificationService.SendNotification(new Domain.Entities.Message
             {
                 Email = model.Email,
                 Message = model.Message,
                 NotificationProvider = model.NotificationProvider,
-                NotificationType = types
+                NotificationType = model.NotificationType
             });
             return Ok(model);
         }

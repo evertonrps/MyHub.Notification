@@ -1,8 +1,8 @@
 ﻿using MyHub.Notification.Domain.Entities;
 
-namespace MyHub.Notification.Domain.Interfaces.Services
+namespace MyHub.Notification.ExternalService.Interfaces.Strategy
 {
-    public interface IMailNotificationService
+    public interface IMailStrategy
     {
         Task<bool> SendMail(Message message);
     }

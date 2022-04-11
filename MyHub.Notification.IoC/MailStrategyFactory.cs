@@ -24,11 +24,11 @@
 //                        throw new InvalidOperationException("Service not avaliable");
 //                    }
 //                case ENotificationProvider.Mandril:
-//                    return new MandrilExternalService();                    
+//                    return new MandrilExternalService();
 //                case ENotificationProvider.HubSpot:
-//                    return new HubSpotExternalService();                                             
+//                    return new HubSpotExternalService();
 //                case ENotificationProvider.MarketingCloud:
-//                    return new MarketingCloudExternalService();                    
+//                    return new MarketingCloudExternalService();
 //                default:
 //                    throw new ArgumentException();
 //            }

@@ -10,11 +10,11 @@ namespace MyHub.Notification.API.Models
         public string ClientID { get; set; }
         public string Message { get; set; }
 
-        [Range(1,999)]
+        [Range(1, 999)]
         public ENotificationProvider? NotificationProvider { get; set; }
 
         [MinLength(1)]
-        [MinimumElementsValue]        
+        [MinimumElementsValue]
         public IEnumerable<ENotiticationType>? NotificationType { get; set; }
     }
 }

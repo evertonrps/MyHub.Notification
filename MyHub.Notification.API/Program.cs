@@ -11,7 +11,6 @@ builder.Services.AddSwaggerGen();
 builder.Logging.ClearProviders();
 BootStrapper.ConfigureServices(builder.Services, builder.Configuration);
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -4,18 +4,18 @@ using MyHub.Notification.Domain.Interfaces.Services;
 
 namespace MyHub.Notification.Domain.Services
 {
-    public class MobileNotificationService : IMobileNotificationService
+    public class WhatsAppNotificationService : IWhatsAppNotificationService
     {
         private readonly INotificationExternalService _notificationExternalService;
 
-        public MobileNotificationService(INotificationExternalService notificationExternalService)
+        public WhatsAppNotificationService(INotificationExternalService notificationExternalService)
         {
             _notificationExternalService = notificationExternalService;
         }
 
-        public Task<bool> SendSmsNotification(Message message)
+        public Task<bool> SendWhatsAppMessage(Message message)
         {
-            return _notificationExternalService.SendSmsNotificationHandler(message);
+            return _notificationExternalService.SendWhatsAppMessageHandler(message);
         }
     }
 }

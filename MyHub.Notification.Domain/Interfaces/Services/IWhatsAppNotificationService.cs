@@ -2,8 +2,8 @@
 
 namespace MyHub.Notification.Domain.Interfaces.Services
 {
-    public interface IPushNotificationService
+    public interface IWhatsAppNotificationService
     {
-        Task<bool> SendPushNotification(Message message);
+        Task<bool> SendWhatsAppMessage(Message message);
     }
 }
