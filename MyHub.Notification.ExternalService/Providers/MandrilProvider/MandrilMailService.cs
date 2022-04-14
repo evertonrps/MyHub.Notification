@@ -19,8 +19,8 @@ namespace MyHub.Notification.ExternalService.Providers.MandrilProvider
 
         public Task<ResponseEntity> SendMail(Message message)
         {
-            _logger.LogInformation("Sended Mail by Mandril");            
-            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.Email, Provider = NotificationProvider, Success = false, Message = "Sended Mail by Mandril" });            
+            _logger.LogInformation("Sended Mail by Mandril");
+            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.Email, Provider = NotificationProvider, Success = true, Message = "Sended Mail by Mandril" });
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using MyHub.Notification.Domain.Entities;
 using MyHub.Notification.Domain.Enuns;
-using MyHub.Notification.Domain.Exceptions;
 using MyHub.Notification.Domain.SeedWork;
 using MyHub.Notification.ExternalService.Interfaces.Handler;
 using MyHub.Notification.ExternalService.Interfaces.Strategy;

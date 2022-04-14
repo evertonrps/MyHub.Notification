@@ -20,7 +20,7 @@ namespace MyHub.Notification.ExternalService.Providers.HubSpotProvider
         public Task<ResponseEntity> SendWebNotification(Message message)
         {
             _logger.LogInformation("Sended Web Notification by HubSpot");
-            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.WebNotification, Provider = NotificationProvider, Success = true, Message = "Sended Web Notification by HubSpot" });            
+            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.WebNotification, Provider = NotificationProvider, Success = true, Message = "Sended Web Notification by HubSpot" });
         }
     }
 }

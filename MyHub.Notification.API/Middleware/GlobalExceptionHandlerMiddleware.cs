@@ -31,10 +31,12 @@ namespace MyHub.Notification.API.Middleware
                         // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
+
                     case KeyNotFoundException e:
                         // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
+
                     default:
                         // unhandled error
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -42,7 +44,7 @@ namespace MyHub.Notification.API.Middleware
                 }
 
                 //var result = JsonSerializer.Serialize(new { message = error?.Message });
-                var result = JsonSerializer.Serialize(new ResponseError {Message = error.Message });
+                var result = JsonSerializer.Serialize(new ResponseError { Message = error.Message });
                 await response.WriteAsync(result);
             }
         }

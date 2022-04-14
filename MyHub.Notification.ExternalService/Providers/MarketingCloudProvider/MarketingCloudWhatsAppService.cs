@@ -20,7 +20,7 @@ namespace MyHub.Notification.ExternalService.Providers.MarketingCloudProvider
         public Task<ResponseEntity> SendWhatsAppMessage(Message message)
         {
             _logger.LogInformation("Sended WhatsApp Message by Marketing Cloud");
-            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.WhatsAppMessage, Provider = NotificationProvider, Success = true, Message = "Sended WhatsApp Message by Marketing Cloud" });            
+            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.WhatsAppMessage, Provider = NotificationProvider, Success = true, Message = "Sended WhatsApp Message by Marketing Cloud" });
         }
     }
 }

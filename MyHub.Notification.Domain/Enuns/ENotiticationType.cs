@@ -17,7 +17,7 @@ namespace MyHub.Notification.Domain.Enuns
         PushNotification = 3,
 
         [Description("Web Notification")]
-        WebNotification = 4,        
+        WebNotification = 4,
 
         [Description("WhatsApp Message")]
         WhatsAppMessage = 5,

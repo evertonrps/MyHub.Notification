@@ -1,10 +1,8 @@
 using GlobalExceptionHandler.WebApi;
-using MyHub.Notification.API.Middleware;
 using MyHub.Notification.Domain.Exceptions;
 using MyHub.Notification.Domain.SeedWork;
 using MyHub.Notification.IoC;
 using Newtonsoft.Json;
-using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +51,6 @@ app.UseGlobalExceptionHandler(x =>
     {
         Message = ex.Message,
         Results = ex.Results
-
     }));
 });
 

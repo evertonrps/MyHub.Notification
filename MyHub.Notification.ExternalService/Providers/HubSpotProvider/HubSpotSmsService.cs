@@ -19,7 +19,7 @@ namespace MyHub.Notification.ExternalService.Providers.HubSpotProvider
 
         public Task<ResponseEntity> SendSMS(Message message)
         {
-            _logger.LogInformation("Sended SMS by HubSpot");            
+            _logger.LogInformation("Sended SMS by HubSpot");
             return Task.FromResult(new ResponseEntity { Type = ENotiticationType.MobileNotification, Provider = NotificationProvider, Success = true, Message = "Sended SMS by HubSpot" });
         }
     }

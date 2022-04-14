@@ -2,7 +2,6 @@
 using MyHub.Notification.API.Models;
 using MyHub.Notification.Domain.Enuns;
 using MyHub.Notification.Domain.Interfaces.Services;
-using MyHub.Notification.Domain.SeedWork;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,16 +22,16 @@ namespace MyHub.Notification.API.Controllers
         [HttpGet("providers")]
         public IActionResult GetProviders()
         {
-            Dictionary<int, string> providers = Enum.GetValues(typeof(ENotificationProvider))
+            Dictionary<int, string?> providers = Enum.GetValues(typeof(ENotificationProvider))
                                         .Cast<ENotificationProvider>()
-                                        .ToDictionary(x=> (int)x, v=> v.GetDescription());
+                                        .ToDictionary(x => (int)x, v => v.GetDescription());
             return Ok(providers);
         }
 
         [HttpGet("services")]
         public IActionResult GetServices()
         {
-            Dictionary<int, string> types = Enum.GetValues(typeof(ENotiticationType))
+            Dictionary<int, string?> types = Enum.GetValues(typeof(ENotiticationType))
                                         .Cast<ENotiticationType>()
                                         .ToDictionary(x => (int)x, v => v.GetDescription());
             return Ok(types);

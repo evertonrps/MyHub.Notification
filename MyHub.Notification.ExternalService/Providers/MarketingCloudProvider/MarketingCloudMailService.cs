@@ -19,7 +19,7 @@ namespace MyHub.Notification.ExternalService.Providers.MarketingCloudProvider
 
         public Task<ResponseEntity> SendMail(Message message)
         {
-            _logger.LogInformation("Sended Mail by Marketing Clould");            
+            _logger.LogInformation("Sended Mail by Marketing Clould");
             return Task.FromResult(new ResponseEntity { Type = ENotiticationType.Email, Provider = NotificationProvider, Success = true, Message = "Sended Mail by Marketing Clould" });
         }
     }

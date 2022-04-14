@@ -32,10 +32,9 @@ namespace MyHub.Notification.Domain.services
 
         public async Task<List<ResponseEntity>> SendNotification(Message message)
         {
-            ///TODO validar envio ALL
             List<ResponseEntity> results = new List<ResponseEntity>();
-            ///WhatsApp Message
-            foreach (var item in message.NotificationType)
+
+            foreach (var item in message.NotificationType ?? Enumerable.Empty<Enuns.ENotiticationType>())
             {
                 switch (item)
                 {
@@ -81,8 +80,9 @@ namespace MyHub.Notification.Domain.services
                             break;
                         }
                     case Enuns.ENotiticationType.All:
-                        //Send everything
+                        ///TODO
                         break;
+
                     default:
                         {
                             _logger.LogError("Unknown notification type");

@@ -20,7 +20,7 @@ namespace MyHub.Notification.ExternalService.Providers.FirebaseProvider
         public Task<ResponseEntity> SendPushNotification(Message message)
         {
             _logger.LogInformation("Sended Push by Firebase");
-            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.PushNotification, Provider = NotificationProvider, Success = true, Message = "Sended Push by Firebase" });            
+            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.PushNotification, Provider = NotificationProvider, Success = true, Message = "Sended Push by Firebase" });
         }
     }
 }

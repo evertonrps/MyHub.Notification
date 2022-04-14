@@ -7,8 +7,8 @@ namespace MyHub.Notification.Domain.Exceptions
     {
         private readonly List<ResponseEntity>? results;
 
-        public List<ServiceError>? Results {
-
+        public List<ServiceError>? Results
+        {
             get { return results?.ConvertAll<ServiceError>(new Converter<ResponseEntity, ServiceError>(ResutlToError)); }
         }
 

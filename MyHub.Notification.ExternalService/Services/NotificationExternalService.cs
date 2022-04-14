@@ -39,35 +39,47 @@ namespace MyHub.Notification.ExternalService.Services
 
         public Task<ResponseEntity> SendMailHandler(Message message)
         {
-            if (message.NotificationType != null)
+            if (message.NotificationProvider != null)
                 return _mailStrategy.SendMail(message);
 
-            var messageCopy = message.ShallowCopy().SetProvider(defaultMailProvider);            
+            var messageCopy = message.ShallowCopy().SetProvider(defaultMailProvider);
             return _mailStrategy.SendMail(messageCopy);
         }
 
         public Task<ResponseEntity> SendPushNotificationHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? defaultPushProvider;
-            return _pushStrategy.SendPushNotification(message);
+            if (message.NotificationProvider != null)
+                return _pushStrategy.SendPushNotification(message);
+
+            var messageCopy = message.ShallowCopy().SetProvider(defaultPushProvider);
+            return _pushStrategy.SendPushNotification(messageCopy);
         }
 
         public Task<ResponseEntity> SendSmsNotificationHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? defaultSMSProvider;
-            return _smsStrategy.SendSMS(message);
+            if (message.NotificationProvider != null)
+                return _smsStrategy.SendSMS(message);
+
+            var messageCopy = message.ShallowCopy().SetProvider(defaultSMSProvider);
+            return _smsStrategy.SendSMS(messageCopy);
         }
 
         public Task<ResponseEntity> SendWebNotificationHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? defaultWebNotificationProvider;
-            return _webNotificationStrategy.SendWebNotification(message);
+            if (message.NotificationProvider != null)
+                return _webNotificationStrategy.SendWebNotification(message);
+
+            var messageCopy = message.ShallowCopy().SetProvider(defaultWebNotificationProvider);
+            return _webNotificationStrategy.SendWebNotification(messageCopy);
         }
 
         public Task<ResponseEntity> SendWhatsAppMessageHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? defaultWhatsAppProvider;
-            return _whatsAppStrategy.SendWhatsAppMessage(message);
+            if (message.NotificationProvider != null)
+                return _whatsAppStrategy.SendWhatsAppMessage(message);
+
+            var messageCopy = message.ShallowCopy().SetProvider(defaultWhatsAppProvider);
+            return _whatsAppStrategy.SendWhatsAppMessage(messageCopy);
         }
     }
 }

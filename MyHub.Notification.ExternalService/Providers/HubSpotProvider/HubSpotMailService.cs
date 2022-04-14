@@ -20,7 +20,7 @@ namespace MyHub.Notification.ExternalService.Providers.HubSpotProvider
         public Task<ResponseEntity> SendMail(Message message)
         {
             _logger.LogInformation("Sended Mail by HubSpost");
-            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.Email, Provider = NotificationProvider, Success = true, Message = "Sended Mail by HubSpost" });            
+            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.Email, Provider = NotificationProvider, Success = true, Message = "Sended Mail by HubSpost" });
         }
     }
 }
