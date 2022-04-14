@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyHub.Notification.Domain.Entities;
 using MyHub.Notification.Domain.Enuns;
+using MyHub.Notification.Domain.SeedWork;
 using MyHub.Notification.ExternalService.Interfaces.Handler;
 
 namespace MyHub.Notification.ExternalService.Providers.MandrilProvider
@@ -16,10 +17,10 @@ namespace MyHub.Notification.ExternalService.Providers.MandrilProvider
             _logger = logger;
         }
 
-        public Task<bool> SendMail(Message message)
+        public Task<ResponseEntity> SendMail(Message message)
         {
-            _logger.LogInformation("Sended Mail by Mandril");
-            return Task.FromResult(true);
+            _logger.LogInformation("Sended Mail by Mandril");            
+            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.Email, Provider = NotificationProvider, Success = false, Message = "Sended Mail by Mandril" });            
         }
     }
 }

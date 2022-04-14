@@ -15,7 +15,11 @@ namespace MyHub.Notification.ExternalService.Services
         private readonly IPushStrategy _pushStrategy;
         private readonly IWhatsAppStrategy _whatsAppStrategy;
         private readonly IWebNotificationStrategy _webNotificationStrategy;
-        private readonly ENotificationProvider notificationProvider;
+        private readonly ENotificationProvider defaultMailProvider;
+        private readonly ENotificationProvider defaultSMSProvider;
+        private readonly ENotificationProvider defaultPushProvider;
+        private readonly ENotificationProvider defaultWebNotificationProvider;
+        private readonly ENotificationProvider defaultWhatsAppProvider;
 
         public NotificationExternalService(IOptions<AppSettings> configuration, IMailStrategy mailStrategy, ISmsStrategy smsStrategy, IPushStrategy pushStrategy, IWhatsAppStrategy whatsAppStrategy, IWebNotificationStrategy webNotificationStrategy)
         {
@@ -25,37 +29,44 @@ namespace MyHub.Notification.ExternalService.Services
             _pushStrategy = pushStrategy;
             _whatsAppStrategy = whatsAppStrategy;
             _webNotificationStrategy = webNotificationStrategy;
-            notificationProvider = (ENotificationProvider)_configuration.Value.DefaultMailProvider;
+
+            defaultMailProvider = (ENotificationProvider)_configuration.Value.DefaultMailProvider;
+            defaultSMSProvider = (ENotificationProvider)_configuration.Value.DefaultSMSProvider;
+            defaultPushProvider = (ENotificationProvider)_configuration.Value.DefaultPushProvider;
+            defaultWebNotificationProvider = (ENotificationProvider)_configuration.Value.DefaultWebNotificationProvider;
+            defaultWhatsAppProvider = (ENotificationProvider)_configuration.Value.DefaultWhatsAppProvider;
         }
 
-        public Task<bool> SendMailHandler(Message message)
+        public Task<ResponseEntity> SendMailHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? notificationProvider;
+            if (message.NotificationType != null)
+                return _mailStrategy.SendMail(message);
 
-            return _mailStrategy.SendMail(message);
+            var messageCopy = message.ShallowCopy().SetProvider(defaultMailProvider);            
+            return _mailStrategy.SendMail(messageCopy);
         }
 
-        public Task<bool> SendPushNotificationHandler(Message message)
+        public Task<ResponseEntity> SendPushNotificationHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? notificationProvider;
+            message.NotificationProvider = message.NotificationProvider ?? defaultPushProvider;
             return _pushStrategy.SendPushNotification(message);
         }
 
-        public Task<bool> SendSmsNotificationHandler(Message message)
+        public Task<ResponseEntity> SendSmsNotificationHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? notificationProvider;
+            message.NotificationProvider = message.NotificationProvider ?? defaultSMSProvider;
             return _smsStrategy.SendSMS(message);
         }
 
-        public Task<bool> SendWebNotificationHandler(Message message)
+        public Task<ResponseEntity> SendWebNotificationHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? notificationProvider;
+            message.NotificationProvider = message.NotificationProvider ?? defaultWebNotificationProvider;
             return _webNotificationStrategy.SendWebNotification(message);
         }
 
-        public Task<bool> SendWhatsAppMessageHandler(Message message)
+        public Task<ResponseEntity> SendWhatsAppMessageHandler(Message message)
         {
-            message.NotificationProvider = message.NotificationProvider ?? notificationProvider;
+            message.NotificationProvider = message.NotificationProvider ?? defaultWhatsAppProvider;
             return _whatsAppStrategy.SendWhatsAppMessage(message);
         }
     }

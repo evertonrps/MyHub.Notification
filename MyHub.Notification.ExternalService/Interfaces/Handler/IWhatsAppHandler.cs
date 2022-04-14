@@ -1,5 +1,6 @@
 ﻿using MyHub.Notification.Domain.Entities;
 using MyHub.Notification.Domain.Enuns;
+using MyHub.Notification.Domain.SeedWork;
 
 namespace MyHub.Notification.ExternalService.Interfaces.Handler
 {
@@ -7,6 +8,6 @@ namespace MyHub.Notification.ExternalService.Interfaces.Handler
     {
         ENotificationProvider NotificationProvider { get; }
 
-        Task<bool> SendWhatsAppMessage(Message message);
+        Task<ResponseEntity> SendWhatsAppMessage(Message message);
     }
 }

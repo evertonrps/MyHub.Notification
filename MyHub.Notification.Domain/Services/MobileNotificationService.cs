@@ -1,6 +1,7 @@
 ﻿using MyHub.Notification.Domain.Entities;
 using MyHub.Notification.Domain.ExternalServices.Interfaces;
 using MyHub.Notification.Domain.Interfaces.Services;
+using MyHub.Notification.Domain.SeedWork;
 
 namespace MyHub.Notification.Domain.Services
 {
@@ -13,7 +14,7 @@ namespace MyHub.Notification.Domain.Services
             _notificationExternalService = notificationExternalService;
         }
 
-        public Task<bool> SendSmsNotification(Message message)
+        public Task<ResponseEntity> SendSmsNotification(Message message)
         {
             return _notificationExternalService.SendSmsNotificationHandler(message);
         }

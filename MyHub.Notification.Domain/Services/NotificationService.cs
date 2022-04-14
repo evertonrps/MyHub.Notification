@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyHub.Notification.Domain.Entities;
+using MyHub.Notification.Domain.Exceptions;
 using MyHub.Notification.Domain.Interfaces.Services;
+using MyHub.Notification.Domain.SeedWork;
 
 namespace MyHub.Notification.Domain.services
 {
@@ -28,9 +30,10 @@ namespace MyHub.Notification.Domain.services
             _logger = logger;
         }
 
-        public Task<bool> SendNotification(Message message)
+        public async Task<List<ResponseEntity>> SendNotification(Message message)
         {
             ///TODO validar envio ALL
+            List<ResponseEntity> results = new List<ResponseEntity>();
             ///WhatsApp Message
             foreach (var item in message.NotificationType)
             {
@@ -41,39 +44,56 @@ namespace MyHub.Notification.Domain.services
                         break;
 
                     case Enuns.ENotiticationType.Email:
-                        //Send Mail
-                        _mailNotificationService.SendMail(message);
-                        break;
-
+                        {
+                            //Send Mail
+                            var sendMail = await _mailNotificationService.SendMail(message);
+                            results.Add(sendMail);
+                            break;
+                        }
                     case Enuns.ENotiticationType.MobileNotification:
-                        //Send SMS
-                        _mobileNotificationService.SendSmsNotification(message);
-                        break;
+                        {
+                            //Send SMS
+                            var sendSms = await _mobileNotificationService.SendSmsNotification(message);
+                            results.Add(sendSms);
+                            break;
+                        }
 
                     case Enuns.ENotiticationType.PushNotification:
-                        //Send Push
-                        _pushNotificationService.SendPushNotification(message);
-                        break;
+                        {
+                            //Send Push
+                            var sendPUsh = await _pushNotificationService.SendPushNotification(message);
+                            results.Add(sendPUsh);
+                            break;
+                        }
 
                     case Enuns.ENotiticationType.WebNotification:
-                        //Send Web
-                        _webNotificationService.SendWebNotification(message);
-                        break;
+                        {
+                            //Send Web
+                            var senWebNotification = await _webNotificationService.SendWebNotification(message);
+                            results.Add(senWebNotification);
+                            break;
+                        }
 
                     case Enuns.ENotiticationType.WhatsAppMessage:
-                        _whatsAppNotificationService.SendWhatsAppMessage(message);
-                        break;
-
+                        {
+                            var whatsApp = await _whatsAppNotificationService.SendWhatsAppMessage(message);
+                            results.Add(whatsApp);
+                            break;
+                        }
                     case Enuns.ENotiticationType.All:
                         //Send everything
                         break;
-
                     default:
-                        _logger.LogError("Unknown notification type");
-                        break;
+                        {
+                            _logger.LogError("Unknown notification type");
+                            results.Add(new ResponseEntity { Type = item, Success = false, Message = "Unknown notification type" });
+                            break;
+                        }
                 }
             }
-            return Task.FromResult(true);
+            if (results.Where(x => !x.Success).Any())
+                throw new SendException("Falha durante o envio", results);
+            return results;
         }
     }
 }

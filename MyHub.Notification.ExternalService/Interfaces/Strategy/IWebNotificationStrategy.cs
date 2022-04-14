@@ -1,9 +1,10 @@
 ﻿using MyHub.Notification.Domain.Entities;
+using MyHub.Notification.Domain.SeedWork;
 
 namespace MyHub.Notification.ExternalService.Interfaces.Strategy
 {
     public interface IWebNotificationStrategy
     {
-        Task<bool> SendWebNotification(Message message);
+        Task<ResponseEntity> SendWebNotification(Message message);
     }
 }

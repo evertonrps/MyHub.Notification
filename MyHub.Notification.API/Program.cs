@@ -1,4 +1,10 @@
+using GlobalExceptionHandler.WebApi;
+using MyHub.Notification.API.Middleware;
+using MyHub.Notification.Domain.Exceptions;
+using MyHub.Notification.Domain.SeedWork;
 using MyHub.Notification.IoC;
+using Newtonsoft.Json;
+using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,5 +31,32 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
+app.UseGlobalExceptionHandler(x =>
+{
+    x.ContentType = "application/json";
+    x.ResponseBody(s => JsonConvert.SerializeObject(new
+    {
+        Message = "An error occurred whilst processing your request"
+    }));
+
+    x.Map<RecordNotFoundException>().ToStatusCode(StatusCodes.Status404NotFound)
+       .WithBody((ex, context) => JsonConvert.SerializeObject(new
+       {
+           Message = ex.Message
+       }));
+
+    x.Map<SendException>().ToStatusCode(StatusCodes.Status400BadRequest)
+    .WithBody((ex, context) => JsonConvert.SerializeObject(new ResponseError
+    {
+        Message = ex.Message,
+        Results = ex.Results
+
+    }));
+});
+
+app.Map("/error", x => x.Run(y => throw new Exception()));
 
 app.Run();

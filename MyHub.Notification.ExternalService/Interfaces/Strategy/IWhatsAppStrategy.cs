@@ -1,9 +1,10 @@
 ﻿using MyHub.Notification.Domain.Entities;
+using MyHub.Notification.Domain.SeedWork;
 
 namespace MyHub.Notification.ExternalService.Interfaces.Strategy
 {
     public interface IWhatsAppStrategy
     {
-        Task<bool> SendWhatsAppMessage(Message message);
+        Task<ResponseEntity> SendWhatsAppMessage(Message message);
     }
 }

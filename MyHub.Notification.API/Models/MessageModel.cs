@@ -6,9 +6,9 @@ namespace MyHub.Notification.API.Models
 {
     public class MessageModel
     {
-        public string Email { get; set; }
-        public string ClientID { get; set; }
-        public string Message { get; set; }
+        public string? Email { get; set; }
+        public string? ClientID { get; set; }
+        public string? Message { get; set; }
 
         [Range(1, 999)]
         public ENotificationProvider? NotificationProvider { get; set; }

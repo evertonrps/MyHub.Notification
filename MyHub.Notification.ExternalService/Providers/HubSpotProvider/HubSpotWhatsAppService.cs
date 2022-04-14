@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyHub.Notification.Domain.Entities;
 using MyHub.Notification.Domain.Enuns;
+using MyHub.Notification.Domain.SeedWork;
 using MyHub.Notification.ExternalService.Interfaces.Handler;
 
 namespace MyHub.Notification.ExternalService.Providers.HubSpotProvider
@@ -16,10 +17,10 @@ namespace MyHub.Notification.ExternalService.Providers.HubSpotProvider
             _logger = logger;
         }
 
-        public Task<bool> SendWhatsAppMessage(Message message)
+        public Task<ResponseEntity> SendWhatsAppMessage(Message message)
         {
             _logger.LogInformation("Sended WhatsApp Message by HubSpot");
-            return Task.FromResult(true);
+            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.WhatsAppMessage, Provider = NotificationProvider, Success = true, Message = "Sended WhatsApp Message by HubSpot" });            
         }
     }
 }

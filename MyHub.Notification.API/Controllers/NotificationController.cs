@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyHub.Notification.API.Models;
+using MyHub.Notification.Domain.Enuns;
 using MyHub.Notification.Domain.Interfaces.Services;
+using MyHub.Notification.Domain.SeedWork;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,10 +20,22 @@ namespace MyHub.Notification.API.Controllers
         }
 
         // GET: api/<NotificationController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("providers")]
+        public IActionResult GetProviders()
         {
-            return new string[] { "value1", "value2" };
+            Dictionary<int, string> providers = Enum.GetValues(typeof(ENotificationProvider))
+                                        .Cast<ENotificationProvider>()
+                                        .ToDictionary(x=> (int)x, v=> v.GetDescription());
+            return Ok(providers);
+        }
+
+        [HttpGet("services")]
+        public IActionResult GetServices()
+        {
+            Dictionary<int, string> types = Enum.GetValues(typeof(ENotiticationType))
+                                        .Cast<ENotiticationType>()
+                                        .ToDictionary(x => (int)x, v => v.GetDescription());
+            return Ok(types);
         }
 
         // GET api/<NotificationController>/5
@@ -35,16 +49,14 @@ namespace MyHub.Notification.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(MessageModel model)
         {
-            //var types = new List<Domain.Enuns.ENotiticationType>();
-            //types = model.NotificationType;
             var retorno = await _notificationService.SendNotification(new Domain.Entities.Message
             {
                 Email = model.Email,
                 Message = model.Message,
-                NotificationProvider = model.NotificationProvider,
-                NotificationType = model.NotificationType
+                NotificationProvider = model?.NotificationProvider,
+                NotificationType = model?.NotificationType
             });
-            return Ok(model);
+            return Ok(retorno);
         }
 
         // PUT api/<NotificationController>/5

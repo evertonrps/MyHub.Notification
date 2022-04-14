@@ -1,4 +1,7 @@
 ﻿using MyHub.Notification.Domain.Entities;
+using MyHub.Notification.Domain.Enuns;
+using MyHub.Notification.Domain.Exceptions;
+using MyHub.Notification.Domain.SeedWork;
 using MyHub.Notification.ExternalService.Interfaces.Handler;
 using MyHub.Notification.ExternalService.Interfaces.Strategy;
 
@@ -13,9 +16,17 @@ namespace MyHub.Notification.ExternalService.Services
             _providers = providers;
         }
 
-        public Task<bool> SendWhatsAppMessage(Message message)
+        public Task<ResponseEntity> SendWhatsAppMessage(Message message)
         {
-            return _providers.FirstOrDefault(x => x.NotificationProvider == message.NotificationProvider)?.SendWhatsAppMessage(message) ?? throw new ArgumentNullException(nameof(message));
+            return _providers.FirstOrDefault(x => x.NotificationProvider == message.NotificationProvider)?.SendWhatsAppMessage(message)
+                                 ?? Task.FromResult(new ResponseEntity
+                                 {
+                                     Message = $"{message?.NotificationProvider?.GetDescription()} not support whatsapp service",
+                                     Success = false,
+                                     Type = ENotiticationType.WhatsAppMessage,
+                                     Provider = message?.NotificationProvider
+                                 });
+            //?? throw new ServiceUnavailableException(message.NotificationProvider,$"{message?.NotificationProvider?.GetDescription()} not support whatsapp service");
         }
     }
 }

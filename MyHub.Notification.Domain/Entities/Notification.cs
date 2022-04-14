@@ -4,10 +4,10 @@ namespace MyHub.Notification.Domain.Entities
 {
     public abstract class Notification
     {
-        public string Email { get; set; }
-        public string ClientID { get; set; }
-        public string Message { get; set; }
+        public string? Email { get; set; }
+        public string? ClientID { get; set; }
+        public string? Message { get; set; }
         public ENotificationProvider? NotificationProvider { get; set; }
-        public IEnumerable<ENotiticationType> NotificationType { get; set; }
+        public IEnumerable<ENotiticationType>? NotificationType { get; set; }
     }
 }

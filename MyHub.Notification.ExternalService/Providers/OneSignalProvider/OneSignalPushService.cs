@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyHub.Notification.Domain.Entities;
 using MyHub.Notification.Domain.Enuns;
+using MyHub.Notification.Domain.SeedWork;
 using MyHub.Notification.ExternalService.Interfaces.Handler;
 
 namespace MyHub.Notification.ExternalService.Providers.OneSignalProvider
@@ -16,10 +17,10 @@ namespace MyHub.Notification.ExternalService.Providers.OneSignalProvider
             _logger = logger;
         }
 
-        public Task<bool> SendPushNotification(Message message)
+        public Task<ResponseEntity> SendPushNotification(Message message)
         {
             _logger.LogInformation("Sended Push by One Signal");
-            return Task.FromResult(true);
+            return Task.FromResult(new ResponseEntity { Type = ENotiticationType.PushNotification, Provider = NotificationProvider, Success = true, Message = "Sended Push by One Signal" });            
         }
     }
 }
