@@ -9,12 +9,14 @@ namespace MyHub.Notification.API.Models
         public string? Email { get; set; }
         public string? ClientID { get; set; }
         public string? Message { get; set; }
+        public string? Subject { get; set; }
+        public string? Template { get; set; }
 
         [Range(1, 999)]
         public ENotificationProvider? NotificationProvider { get; set; }
 
         [MinLength(1)]
         [MinimumElementsValue]
-        public IEnumerable<ENotiticationType>? NotificationType { get; set; }
+        public IEnumerable<ENotiticationType>? NotificationType { get; set; }        
     }
 }

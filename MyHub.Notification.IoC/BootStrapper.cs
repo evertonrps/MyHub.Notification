@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyHub.Notification.Data.Repositories;
 using MyHub.Notification.Domain.Enuns;
 using MyHub.Notification.Domain.ExternalServices.Interfaces;
+using MyHub.Notification.Domain.Interfaces.Repositories;
 using MyHub.Notification.Domain.Interfaces.Services;
 using MyHub.Notification.Domain.SeedWork;
 using MyHub.Notification.Domain.services;
@@ -27,6 +29,8 @@ namespace MyHub.Notification.IoC
             services.Configure<AppSettings>(appSettingsSection);
 
             //Repositories
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IMailTemplateRepository, MailTemplateRepository>();
 
             //Services
             services.AddScoped<INotificationService, NotificationService>();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyHub.Notification.API.Models;
+using MyHub.Notification.Domain.Entities;
 using MyHub.Notification.Domain.Enuns;
 using MyHub.Notification.Domain.Interfaces.Services;
 
@@ -12,7 +13,6 @@ namespace MyHub.Notification.API.Controllers
     public class NotificationController : ControllerBase
     {
         private readonly INotificationService _notificationService;
-
         public NotificationController(INotificationService notificationService)
         {
             _notificationService = notificationService;
@@ -48,13 +48,20 @@ namespace MyHub.Notification.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(MessageModel model)
         {
-            var retorno = await _notificationService.SendNotification(new Domain.Entities.Message
-            {
-                Email = model.Email,
-                Message = model.Message,
-                NotificationProvider = model?.NotificationProvider,
-                NotificationType = model?.NotificationType
-            });
+            var message = Message.Factory(
+                model.Email,
+                model.ClientID,
+                model.Message,
+                model.Subject,
+                model.Template,
+                model?.NotificationProvider,
+                model?.NotificationType);
+            
+
+            if (!message.IsValid())
+                return BadRequest(message.Errors.Select(x=> x.ErrorMessage));
+           
+            var retorno = await _notificationService.SendNotification(message);
             return Ok(retorno);
         }
 

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyHub.Notification.Data\MyHub.Notification.Data.csproj" />
     <ProjectReference Include="..\MyHub.Notification.Domain\MyHub.Notification.Domain.csproj" />
     <ProjectReference Include="..\MyHub.Notification.ExternalService\MyHub.Notification.ExternalService.csproj" />
   </ItemGroup>

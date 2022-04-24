@@ -52,6 +52,13 @@ app.UseGlobalExceptionHandler(x =>
         Message = ex.Message,
         Results = ex.Results
     }));
+
+    x.Map<TemplateRequiredException>().ToStatusCode(StatusCodes.Status400BadRequest)
+    .WithBody((ex, context) => JsonConvert.SerializeObject(new ResponseError
+    {
+        Message = ex.Message,
+        Results = ex.Results
+    }));
 });
 
 app.Map("/error", x => x.Run(y => throw new Exception()));
